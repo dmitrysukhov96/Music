@@ -31,9 +31,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            BpmSoundApp()
-        }
+        setContent { BpmSoundApp() }
     }
 }
 
@@ -42,14 +40,10 @@ fun BpmSoundApp() {
     val viewModel: BpmViewModel = viewModel()
     val isPlaying by viewModel.isPlaying
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(
-            onClick = { viewModel.togglePlay() },
-            modifier = Modifier.padding(16.dp)
-        ) {
+        Button(onClick = { viewModel.togglePlay() }, modifier = Modifier.padding(16.dp)) {
             Text(if (isPlaying) "Stop" else "Start", fontSize = 24.sp)
         }
     }
@@ -60,11 +54,10 @@ class BpmViewModel(application: Application) : AndroidViewModel(application) {
     private val snarePlayer = MediaPlayer.create(application, R.raw.snare_g)
     private val hihatPlayer = MediaPlayer.create(application, R.raw.hihat5)
     private val melodyPlayers = listOf(
-        MediaPlayer.create(application, R.raw.c),
-        MediaPlayer.create(application, R.raw.d),
-        MediaPlayer.create(application, R.raw.e),
-        MediaPlayer.create(application, R.raw.f),
-        MediaPlayer.create(application, R.raw.g)
+        MediaPlayer.create(application, R.raw.c1), MediaPlayer.create(application, R.raw.d),
+        MediaPlayer.create(application, R.raw.e), MediaPlayer.create(application, R.raw.f),
+        MediaPlayer.create(application, R.raw.g), MediaPlayer.create(application, R.raw.a),
+        MediaPlayer.create(application, R.raw.h), MediaPlayer.create(application, R.raw.c)
     )
 
     private var mainTimer: CountDownTimer? = null
@@ -115,9 +108,7 @@ class BpmViewModel(application: Application) : AndroidViewModel(application) {
             2 -> intervalMs / 2  // восьмая
             else -> 0L  // пауза
         }
-        if (noteDuration > 0) {
-            launchSound(randomNote)
-        }
+        if (noteDuration > 0) launchSound(randomNote)
     }
 
     private fun launchSound(player: MediaPlayer?) {
